@@ -2,10 +2,11 @@ const Todo = require("../models/Todo");
 
 exports.addTodo = async (req, res) => {
     try {
-        const { title, checked, position } = req.body;
+        const { title,link, checked, position } = req.body;
         console.log(title);
         const newTodo = new Todo({
             title: title,
+            link: link,
             position: position,
             checked: checked
         })
