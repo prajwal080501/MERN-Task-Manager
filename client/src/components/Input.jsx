@@ -5,14 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../context/UserContext";
 const Input = ({ todos, setTodos }) => {
   const [title, setTitle] = useState("");
-  const [position, setPosition] = useState(0);
   const { user, token } = useContext(UserContext);
+
   async function addTodo() {
-    console.log(user._id);
     const newTodo = {
       id: uuidv4(),
       title: title,
-      position: 0, // Set the position to 0 after adding to the state
+      position: 0,
       checked: false,
     };
 
@@ -31,11 +30,11 @@ const Input = ({ todos, setTodos }) => {
         }),
       });
 
-      // Check if the request was successful (status code 2xx)
       if (response.ok) {
-        const res = await response.json(); // Use await to get the JSON data
+        const res = await response.json();
         toast.success(res.message);
-        setTodos([...todos, newTodo]);
+        console.log("Before setting state:", todos);
+        setTodos([...todos, newTodo]); // Ensure todos is initialized properly
         console.log(res);
       } else {
         console.error(
@@ -45,7 +44,8 @@ const Input = ({ todos, setTodos }) => {
         );
       }
     } catch (error) {
-      toast.error(error);
+      // console.error("Failed to add todo:", error);
+      toast.error("Failed to add todo. Please try again later.");
     }
 
     setTitle("");

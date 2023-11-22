@@ -10,7 +10,7 @@ function App() {
     getUser();
   }); // empty dependency arrays
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-screen">
       <Toaster />
       <Header />
       <Home />
