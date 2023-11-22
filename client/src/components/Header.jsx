@@ -33,7 +33,7 @@ const Header = () => {
     const jsonRes = await res.json();
 
     console.log(jsonRes, token);
-    saveUser(data, jsonRes.token);
+    saveUser(jsonRes.user, jsonRes.token);
   };
 
   const onError = (res) => {
@@ -53,12 +53,17 @@ const Header = () => {
             useOneTap
           />
         ) : (
-          <button
-            onClick={logout}
-            className="bg-rose-500 text-white px-2 py-2 rounded-lg font-medium"
-          >
-            Logout
-          </button>
+          <div className="flex space-x-4 items-center">
+            <p className="text-lg bg-blue-500 rounded-lg text-white p-2 font-bold">
+              {user?.name}
+            </p>
+            <button
+              onClick={logout}
+              className="bg-rose-500 text-white px-2 py-2 rounded-lg font-medium"
+            >
+              Logout
+            </button>
+          </div>
         )}
       </div>
     </div>

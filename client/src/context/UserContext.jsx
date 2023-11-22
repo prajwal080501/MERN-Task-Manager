@@ -20,9 +20,15 @@ const UserProvider = ({ children }) => {
   };
 
   const getUser = () => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
+    const currentUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+    if (currentUser && !user) {
+      // Check if user is not already set
+      setUser(JSON.parse(currentUser));
+    }
+
+    if (token) {
+      setToken(token);
     }
   };
 

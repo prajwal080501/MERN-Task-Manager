@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { MdAdd } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
+import { UserContext } from "../context/UserContext";
 const Input = ({ todos, setTodos }) => {
   const [title, setTitle] = useState("");
   const [position, setPosition] = useState(0);
+  const { user, token } = useContext(UserContext);
   async function addTodo() {
+    console.log(user._id);
     const newTodo = {
       id: uuidv4(),
       title: title,
@@ -18,8 +21,10 @@ const Input = ({ todos, setTodos }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          token: token,
         },
         body: JSON.stringify({
+          user_id: user._id,
           title: newTodo.title,
           position: newTodo.position,
           checked: newTodo.checked,
@@ -31,6 +36,7 @@ const Input = ({ todos, setTodos }) => {
         const res = await response.json(); // Use await to get the JSON data
         toast.success(res.message);
         setTodos([...todos, newTodo]);
+        console.log(res);
       } else {
         console.error(
           "Failed to add todo:",
