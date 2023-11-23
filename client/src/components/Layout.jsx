@@ -26,14 +26,11 @@ const Layout = () => {
   useEffect(() => {
     user && token && getTodos();
   }, [user, token]);
-
-  console.log(todos);
-
   return (
     <div className="w-[90%] mx-auto">
       <Input setTodos={setTodos} todos={todos} />
       <div>
-        {todos ? (
+        {user && todos ? (
           todos?.map((todo) => (
             <SingleTodo
               setTodos={setTodos}

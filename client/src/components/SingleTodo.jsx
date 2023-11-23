@@ -2,13 +2,12 @@ import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { UserContext } from "../context/UserContext";
-
+import { motion } from "framer-motion";
 const SingleTodo = ({ todo, todos, setTodos }) => {
   const { user, saveUser, logout, token } = useContext(UserContext);
 
   const { _id, title, checked } = todo;
   const [checkedStatus, setCheckedStatus] = useState(checked);
-
   async function deleteTodo(id) {
     try {
       const response = await fetch(`http://localhost:8000/todo/${id}`, {
@@ -86,13 +85,11 @@ const SingleTodo = ({ todo, todos, setTodos }) => {
   //     }
   // }
 
-  async function handleCheckedStatus(e) {
-    e.preventDefault();
-
+  async function handleCheckedStatus(id) {
     // Update the specific todo's checked property in the local state
     setTodos((prevTodos) => {
       const updatedTodos = prevTodos?.map((t) =>
-        t._id === _id ? { ...t, checked: !checkedStatus } : t
+        t._id === id ? { ...t, checked: !checkedStatus } : t
       );
       return updatedTodos;
     });
@@ -102,7 +99,7 @@ const SingleTodo = ({ todo, todos, setTodos }) => {
 
     try {
       // Update the specific todo's checked property on the server
-      const response = await fetch(`http://localhost:8000/todo/${_id}`, {
+      const response = await fetch(`http://localhost:8000/todo/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -130,13 +127,18 @@ const SingleTodo = ({ todo, todos, setTodos }) => {
   }
 
   return (
-    <div className="flex items-center px-3 py-3 bg-white rounded-lg mt-3">
+    <motion.div
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex items-center px-3 py-3 bg-white rounded-lg mt-3"
+    >
       <div className="flex w-full cursor-move space-x-4 items-center">
         <input
           type="checkbox"
           name="todo"
           checked={checkedStatus}
-          onChange={handleCheckedStatus}
+          onChange={() => handleCheckedStatus(todo._id)}
         />
         <p className={`${checkedStatus && "line-through text-red-500"}`}>
           {title}
@@ -145,7 +147,7 @@ const SingleTodo = ({ todo, todos, setTodos }) => {
       <button onClick={() => deleteTodo(todo._id)}>
         <MdDelete className="text-xl hover:scale-105 hover:text-red-500 duration-200 cursor-pointer" />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

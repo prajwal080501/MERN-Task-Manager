@@ -33,9 +33,7 @@ const Input = ({ todos, setTodos }) => {
       if (response.ok) {
         const res = await response.json();
         toast.success(res.message);
-        console.log("Before setting state:", todos);
         setTodos([...todos, newTodo]); // Ensure todos is initialized properly
-        console.log(res);
       } else {
         console.error(
           "Failed to add todo:",
