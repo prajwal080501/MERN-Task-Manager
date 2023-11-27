@@ -50,7 +50,7 @@ const Input = ({ todos, setTodos }) => {
   }
 
   return (
-    <div className="flex  items-center justify-center w-full p-3 space-x-4">
+    <div className="flex mt-5  items-center justify-center w-full p-3 space-x-4">
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}

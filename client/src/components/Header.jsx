@@ -4,11 +4,13 @@ import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Header = () => {
-  const [userData, setUserData] = useState({});
-  const { user, saveUser, logout, token } = useContext(UserContext);
+  const { user, saveUser, logout, token, loading, setLoading } =
+    useContext(UserContext);
   const handleGoogleLogin = async (response) => {
+    setLoading(true);
     const data = jwtDecode(response.credential);
     const { name, email, picture } = data;
     console.log(data);

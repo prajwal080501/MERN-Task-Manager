@@ -5,6 +5,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState();
+  const [loading, setLoading] = useState(false);
   const saveUser = (user, token) => {
     setUser(user);
     setToken(token);
@@ -40,6 +41,8 @@ const UserProvider = ({ children }) => {
         getUser,
         logout,
         token,
+        loading,
+        setLoading,
       }}
     >
       {children}

@@ -4,6 +4,7 @@ import SingleTodo from "./SingleTodo";
 import toast from "react-hot-toast";
 import Stats from "./Stats";
 import { UserContext } from "../context/UserContext";
+import Greet from "./Greet";
 const Layout = () => {
   const [todos, setTodos] = React.useState([]);
   const { user, token } = useContext(UserContext);
@@ -28,6 +29,7 @@ const Layout = () => {
   }, [user, token]);
   return (
     <div className="w-[90%] mx-auto">
+      <Greet />
       <Input setTodos={setTodos} todos={todos} />
       <div>
         {user && todos ? (
